@@ -23,7 +23,7 @@ This installation guide assumes that ROS Kinetic and Gazebo is already setup
 
 `$ cd src`
 
-Clone this repository and source:
+Clone this repository and source (this implements q-learning to navigate the robot and avoid obstacles):
 
 `$ git clone https://github.com/EricssonResearch/tnmt.git`
 
@@ -34,6 +34,10 @@ And then clone and install dependencies:
 `$ git clone https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git`
 
 `$ pip install pathlib`
+
+`$ sudo apt install ros-kinetic-pid`
+
+`$ sudo apt install ros-kinetic-controller-manager-msgs`
 
 `$ cd ..`
 
@@ -51,6 +55,8 @@ Change all instances of `/kobuki/laser/scan` to `/scan`
 1. Run the environment for turtlebot3 burger
 
 `$ export TURTLEBOT3_MODEL=burger`
+
+`$ source ~/.bashrc`
 
 `$ roslaunch turtlebot3_gazebo turtlebot3_world.launch`
 
