@@ -1,9 +1,7 @@
-# README
-
 # COLLABORATIVE FENCELESS ROBOTICS
 
 Implemented Reinforcement Machine Learning technique (Q-Learning) on TurtleBot 3-Burger
-to avoid bumping into static obstacles.
+to avoid bumping into static obstacles and path finding.
 
 ## Instructions to set up the workspace
 
@@ -17,17 +15,23 @@ This installation guide assumes that ROS Kinetic and Gazebo is already setup
 
 3. Go to projectcs folder to catkin make
 
+`$ cd ..`
+
 `$ catkin_make`
 
 4. Go to src and and clone dependencies
 
 `$ cd src`
 
+Clone this repository and source:
+
+`$ git clone https://github.com/EricssonResearch/tnmt.git`
+
+And then clone and install dependencies:
+
 `$ git clone https://bitbucket.org/theconstructcore/openai_ros.git`
 
 `$ git clone https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git`
-
-`$ git clone https://github.com/EricssonResearch/tnmt.git`
 
 `$ pip install pathlib`
 
@@ -41,10 +45,12 @@ This installation guide assumes that ROS Kinetic and Gazebo is already setup
 
 Open file openai_ros/src/openai_ros/robot_envs.turtlebot2_env.py
 
-Change all instances of `/kobuki/laser/scan'` to `/scan`
+Change all instances of `/kobuki/laser/scan` to `/scan`
 
 ## Instructions to run Q-Learning training
-1. Run the environment
+1. Run the environment for turtlebot3 burger
+
+`$ export TURTLEBOT3_MODEL=burger`
 
 `$ roslaunch turtlebot3_gazebo turtlebot3_world.launch`
 
