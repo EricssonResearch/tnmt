@@ -5,7 +5,7 @@ to avoid bumping into static obstacles and path finding.
 
 ## Instructions to set up the workspace
 
-This installation guide assumes that ROS Kinetic and Gazebo is already setup. If not we refer to ros.md for instructions on how to set up the system (only tested on Ubuntu 16)
+This installation guide assumes that ROS Kinetic and Gazebo 7 is already setup. If not we refer to ros.md for instructions on how to set up the system (only tested on Ubuntu 16)
 
 1.  `$ source /opt/ros/kinetic/setup.bash`
 
