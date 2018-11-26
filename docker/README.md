@@ -8,3 +8,4 @@ Known issues ->
 
 1. scan topic not always running
 2. scan topic may not contain any data
+3. docker build may fail -> to fix increase memory and swap file used by the docker daemon
