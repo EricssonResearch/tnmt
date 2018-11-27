@@ -43,7 +43,8 @@ RUN rm -f /etc/ros/rosdep/sources.list.d/20-default.list
 
 RUN rosdep init
 
-RUN sudo rosdep fix-permissions
+# not needed as everything runs as root here
+#RUN sudo rosdep fix-permissions
 
 RUN rosdep update
 
@@ -87,8 +88,6 @@ RUN apt install ros-kinetic-turtlebot* libudev-dev ros-kinetic-find-object-2d ro
 
 # Setup TurtleBot2i source code and Catkin Environemnt
 
-#RUN chmod 755 /opt/ros/kinetic/setup.bash
-
 WORKDIR /root
 
 RUN mkdir -p /root/turtlebot2i/src
@@ -109,8 +108,6 @@ WORKDIR /root/turtlebot2i
 
 COPY .bashrc /root/.bashrc
 
-RUN /bin/bash -c ". /opt/ros/kinetic/setup.bash; catkin_make" 
-
 # Deep Q-Learning work
 
 COPY turtlebot2i_deep_qlearning/gazebo_stuff/tmnt.world /root/turtlebot2i/src/turtlebot2i_gazebo/worlds
@@ -118,6 +115,8 @@ COPY turtlebot2i_deep_qlearning/gazebo_stuff/models /root/.gazebo/models
 COPY turtlebot2i_deep_qlearning/gazebo_stuff/turtlebot_world.launch /root/turtlebot2i/src/turtlebot2i_gazebo/launch
 
 COPY turtlebot2i_deep_qlearning/turtlebot2i_deep_qlearning/ /root/turtlebot2i_deep_qlearning/
+
+#RUN /bin/bash -c ". /root/turtlebot2i/devel/setup.bash; catkin_make"
 
 RUN pip install -r /root/turtlebot2i_deep_qlearning/dqn/requirements.txt
 
