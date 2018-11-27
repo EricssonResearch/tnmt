@@ -114,10 +114,10 @@ COPY turtlebot2i_deep_qlearning/gazebo_stuff/tmnt.world /root/turtlebot2i/src/tu
 COPY turtlebot2i_deep_qlearning/gazebo_stuff/models /root/.gazebo/models
 COPY turtlebot2i_deep_qlearning/gazebo_stuff/turtlebot_world.launch /root/turtlebot2i/src/turtlebot2i_gazebo/launch
 
-COPY turtlebot2i_deep_qlearning/turtlebot2i_deep_qlearning/ /root/turtlebot2i_deep_qlearning/
+COPY turtlebot2i_deep_qlearning/turtlebot2i_deep_qlearning/ /root/turtlebot2i/src/turtlebot2i_deep_qlearning/
 
 RUN /bin/bash -c ". /opt/ros/kinetic/setup.bash; catkin_make"
 
-RUN pip install -r /root/turtlebot2i_deep_qlearning/dqn/requirements.txt
+RUN pip install -r /root/turtlebot2i/src/turtlebot2i_deep_qlearning/dqn/requirements.txt
 
 ENTRYPOINT ["/bin/bash"]
