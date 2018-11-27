@@ -27,9 +27,6 @@ RUN apt-get update && apt-get install -q -y \
 # setup environment
 EXPOSE 11345
 
-# setup entrypoint
-COPY ./gzserver_entrypoint.sh /
-
 RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 
 RUN apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
@@ -124,7 +121,4 @@ COPY turtlebot2i_deep_qlearning/turtlebot2i_deep_qlearning/ /root/turtlebot2i_de
 
 RUN pip install -r /root/turtlebot2i_deep_qlearning/dqn/requirements.txt
 
-ENTRYPOINT ["/gzserver_entrypoint.sh"]
-CMD ["gzserver"]
-
-# to do the 
+ENTRYPOINT ["/bin/bash"]

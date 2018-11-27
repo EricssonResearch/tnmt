@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>turtlebot2i_deep_qlearning</name>
+  <version>1.0.0</version>
+  <description>
+    This package includes various ROS packages using TurtleBot2i and deep learning.
+  </description>
+  <license>License </license>
+  <author email="alexandros.patsanis.4485@student.uu.se">test</author>
+  <maintainer email="alexandros.patsanis.4485@student.uu.se">test1</maintainer>
+  <url type="website"></url>
+  <url type="emanual"></url>
+  <url type="repository"></url>
+  <url type="bugtracker"></url>
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>rospy</depend>
+</package>
