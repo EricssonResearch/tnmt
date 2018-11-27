@@ -14,7 +14,7 @@ script:
 after_success:
   - docker --version  # document the version travis is using
   - cd docker
-  - docker build -t docker pull kappavita/projectcs18:latest .
+  - docker build -t kappavita/projectcs18:latest .
   - docker push kappavita/projectcs18:latest
   #- docker tag my_example_app:latest [your_ecr_account].dkr.ecr.us-east-1.amazonaws.com/my_example_app:latest
   #- docker push [your_ecr_account].dkr.ecr.us-east-1.amazonaws.com/my_example_app:latest
