@@ -116,7 +116,7 @@ COPY turtlebot2i_deep_qlearning/gazebo_stuff/turtlebot_world.launch /root/turtle
 
 COPY turtlebot2i_deep_qlearning/turtlebot2i_deep_qlearning/ /root/turtlebot2i_deep_qlearning/
 
-#RUN /bin/bash -c ". /root/turtlebot2i/devel/setup.bash; catkin_make"
+RUN /bin/bash -c ". /opt/ros/kinetic/setup.bash; catkin_make"
 
 RUN pip install -r /root/turtlebot2i_deep_qlearning/dqn/requirements.txt
 
