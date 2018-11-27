@@ -1,8 +1,8 @@
-## How to build and via Docker
+## How to build using Docker
 
-1. instal docker (apt-get install docker)
+1. instal docker - https://docs.docker.com/install/linux/docker-ce/ubuntu/
 2. docker build -t tmnt_image .
-3. docker run -it --entrypoint=/bin/bash tnmt_image
+3. docker run -it --entrypoint=/bin/bash tmnt_image
 
 Known issues ->
 
