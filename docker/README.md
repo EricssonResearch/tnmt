@@ -3,6 +3,7 @@
 1. instal docker - https://docs.docker.com/install/linux/docker-ce/ubuntu/
 2. docker build -t tmnt_image .
 3. docker run -it --entrypoint=/bin/bash tmnt_image
+4. /root/startup.sh
 
 Known issues ->
 
