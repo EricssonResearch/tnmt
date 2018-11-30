@@ -1,5 +1,6 @@
 # DockerFile stems from tutorial -> https://github.com/Interbotix/turtlebot2i/wiki/Full-Build-Instructions
 FROM ros:kinetic-ros-core
+#FROM nvidia/cuda:8.0-devel-ubuntu16.04
 
 ENV TERM=xterm
 
@@ -33,11 +34,9 @@ RUN apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C3
 
 RUN apt update && apt upgrade -yq
 
-RUN apt-get install build-essential libgtk-3-dev -yq
-
 # ROS Kinetic Dependencies & Install
 
-RUN apt install git build-essential ros-kinetic-desktop wget -yq
+RUN apt install git build-essential libgtk-3-dev ros-kinetic-desktop wget -yq
 
 RUN rm -f /etc/ros/rosdep/sources.list.d/20-default.list
 
@@ -48,7 +47,7 @@ RUN rosdep init
 
 RUN rosdep update
 
-RUN apt-cache search ros-kinetic
+#RUN apt-cache search ros-kinetic
 
 # RealSense ROS Package install
 
@@ -56,25 +55,25 @@ RUN wget -O enable_kernel_sources.sh http://bit.ly/en_krnl_src
 
 RUN bash ./enable_kernel_sources.sh
 
-RUN apt install ros-kinetic-librealsense ros-kinetic-realsense-camera python-pip -yq
+RUN apt install ros-kinetic-librealsense ros-kinetic-realsense-camera python-pip openssh-server -yq
 
 RUN apt-get install libglfw3-dev -yq
 
-WORKDIR /root
+#WORKDIR /root
 
-RUN git clone https://github.com/IntelRealSense/librealsense.git
+#RUN git clone https://github.com/IntelRealSense/librealsense.git
 
-WORKDIR /root/librealsense
+#WORKDIR /root/librealsense
 
-RUN mkdir build
+#RUN mkdir build
 
-WORKDIR /root/librealsense/build
+#WORKDIR /root/librealsense/build
 
-RUN cmake ../
+#RUN cmake ../
 
-RUN make &&  make install
+#RUN make &&  make install
 
-WORKDIR /root
+#WORKDIR /root
 
 #RUN cp config/99-realsense-libusb.rules /etc/udev/rules.d/
 
@@ -84,7 +83,7 @@ WORKDIR /root
 
 # TurtleBot 2i ROS Package install
 
-RUN apt install ros-kinetic-turtlebot* libudev-dev ros-kinetic-find-object-2d ros-kinetic-rtabmap-ros ros-kinetic-moveit ros-kinetic-octomap-ros ros-kinetic-manipulation-msgs ros-kinetic-controller-manager python-wxgtk3.0 -yq
+RUN apt install vim xvfb ros-kinetic-turtlebot* libudev-dev ros-kinetic-find-object-2d ros-kinetic-rtabmap-ros ros-kinetic-moveit ros-kinetic-octomap-ros ros-kinetic-manipulation-msgs ros-kinetic-controller-manager python-wxgtk3.0 ros-kinetic-gazebo-ros-pkgs ros-kinetic-gazebo-ros-control -yq
 
 # Setup TurtleBot2i source code and Catkin Environemnt
 
@@ -119,5 +118,11 @@ COPY turtlebot2i_deep_qlearning/turtlebot2i_deep_qlearning/ /root/turtlebot2i/sr
 RUN /bin/bash -c ". /opt/ros/kinetic/setup.bash; catkin_make"
 
 RUN pip install -r /root/turtlebot2i/src/turtlebot2i_deep_qlearning/dqn/requirements.txt
+
+RUN /etc/init.d/ssh start
+
+COPY startup.sh /root/
+
+WORKDIR /root
 
 ENTRYPOINT ["/bin/bash"]
