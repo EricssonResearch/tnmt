@@ -1,0 +1,97 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "Using TensorFlow backend.\n"
+     ]
+    }
+   ],
+   "source": [
+    "import rospy\n",
+    "import os\n",
+    "import json\n",
+    "\n",
+    "import numpy as np\n",
+    "import random\n",
+    "import time\n",
+    "import sys\n",
+    "\n",
+    "from collections import deque\n",
+    "from std_msgs.msg import Float32MultiArray\n",
+    "\n",
+    "from NeuralNetwork import NeuralNetwork\n",
+    "\n",
+    "from Environment import Environment\n",
+    "import pdb\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "EPISODES = 6000"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Unable to register with master node [http://localhost:11311]: master may not be running yet. Will keep trying.\n"
+     ]
+    },
+    {
+     "ename": "ROSInitException",
+     "evalue": "Failed to initialize time. Please check logs for additional details",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mROSInitException\u001b[0m                          Traceback (most recent call last)",
+      "\u001b[0;32m<ipython-input-3-823ee3473102>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m()\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0mrospy\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0minit_node\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m'turtlebot2i_deep_qlearning'\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m      2\u001b[0m \u001b[0mpublish_result\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mrospy\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mPublisher\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m'result'\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mFloat32MultiArray\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mqueue_size\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;36m5\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      3\u001b[0m \u001b[0mpublish_action\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mrospy\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mPublisher\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m'get_action'\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mFloat32MultiArray\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mqueue_size\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;36m5\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;32m/opt/ros/kinetic/lib/python2.7/dist-packages/rospy/client.pyc\u001b[0m in \u001b[0;36minit_node\u001b[0;34m(name, argv, anonymous, log_level, disable_rostime, disable_rosout, disable_signals, xmlrpc_port, tcpros_port)\u001b[0m\n\u001b[1;32m    334\u001b[0m     \u001b[0;32mif\u001b[0m \u001b[0;32mnot\u001b[0m \u001b[0mdisable_rostime\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    335\u001b[0m         \u001b[0;32mif\u001b[0m \u001b[0;32mnot\u001b[0m \u001b[0mrospy\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mimpl\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0msimtime\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0minit_simtime\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 336\u001b[0;31m             \u001b[0;32mraise\u001b[0m \u001b[0mrospy\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mexceptions\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mROSInitException\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m\"Failed to initialize time. Please check logs for additional details\"\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    337\u001b[0m     \u001b[0;32melse\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    338\u001b[0m         \u001b[0mrospy\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mrostime\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mset_rostime_initialized\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mTrue\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;31mROSInitException\u001b[0m: Failed to initialize time. Please check logs for additional details"
+     ]
+    }
+   ],
+   "source": [
+    "rospy.init_node('turtlebot2i_deep_qlearning')\n",
+    "publish_result = rospy.Publisher('result', Float32MultiArray, queue_size=5)\n",
+    "publish_action = rospy.Publisher('get_action', Float32MultiArray, queue_size=5)"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 2",
+   "language": "python",
+   "name": "python2"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 2
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython2",
+   "version": "2.7.12"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
