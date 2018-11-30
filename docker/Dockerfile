@@ -1,6 +1,6 @@
 # DockerFile stems from tutorial -> https://github.com/Interbotix/turtlebot2i/wiki/Full-Build-Instructions
-FROM ros:kinetic-ros-core
-#FROM nvidia/cuda:8.0-devel-ubuntu16.04
+#FROM ros:kinetic-ros-core
+FROM nvidia/cuda:8.0-cudnn7-devel
 
 ENV TERM=xterm
 
@@ -55,7 +55,7 @@ RUN wget -O enable_kernel_sources.sh http://bit.ly/en_krnl_src
 
 RUN bash ./enable_kernel_sources.sh
 
-RUN apt install ros-kinetic-librealsense ros-kinetic-realsense-camera python-pip openssh-server -yq
+RUN apt install ros-kinetic-librealsense ros-kinetic-realsense-camera python-pip python-dev openssh-server -yq
 
 RUN apt-get install libglfw3-dev -yq
 
@@ -90,6 +90,8 @@ RUN apt install vim xvfb ros-kinetic-turtlebot* libudev-dev ros-kinetic-find-obj
 WORKDIR /root
 
 RUN mkdir -p /root/turtlebot2i/src
+EXPOSE 11345
+
 
 WORKDIR /root/turtlebot2i/src
 
@@ -122,6 +124,8 @@ RUN pip install -r /root/turtlebot2i/src/turtlebot2i_deep_qlearning/dqn/requirem
 RUN /etc/init.d/ssh start
 
 COPY startup.sh /root/
+
+#RUN pip install jupyter ipython==5.0.0 ipykernel==4.8.0
 
 WORKDIR /root
 
