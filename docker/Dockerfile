@@ -1,6 +1,7 @@
 # DockerFile stems from tutorial -> https://github.com/Interbotix/turtlebot2i/wiki/Full-Build-Instructions
-#FROM ros:kinetic-ros-core
-FROM nvidia/cuda:8.0-cudnn7-devel
+
+FROM ros:kinetic-ros-core
+#FROM nvidia/cuda:8.0-cudnn7-devel
 
 ENV TERM=xterm
 
