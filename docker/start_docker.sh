@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker run --net=host --it -p 9090:9090 tnmt_image
+docker run -it -p 9090:9090 tmnt_image
