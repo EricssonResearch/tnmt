@@ -1,22 +1,20 @@
-sudo: required #is required to use docker service in travis
-
-language: php #can be any language, just php for example
-
+sudo: required
+language: php
 services:
-  - docker # required, but travis uses older version of docker :(
-
+- docker
 install:
-  - echo "install nothing!" # put your normal pre-testing installs here
-
+- echo "install nothing!"
 script:
-  - echo "no tests!" # put your normal testing scripts here
-
+- echo "no tests!"
 after_success:
-  - docker --version  # document the version travis is using
-  - cd docker
-  - docker build -t kappavita/projectcs18:latest .
-  - docker push kappavita/projectcs18:latest
-  #- docker tag my_example_app:latest [your_ecr_account].dkr.ecr.us-east-1.amazonaws.com/my_example_app:latest
-  #- docker push [your_ecr_account].dkr.ecr.us-east-1.amazonaws.com/my_example_app:latest
-  
-# sadly, travis doesn't cache docker builds yet, so each build will take a while
+- docker --version
+- cd docker
+- docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+- docker build -t kappavita/projectcs18:latest .
+- docker push kappavita/projectcs18:latest
+env:
+  global:
+  - secure: qR+S9XIzR6WHWZQ9w9AP1euLT6VRb47ZSWXd9a0d6zQj39ZJNW37yw3ITYzb0Cb6RrkoQQFGptP57qeQ5Xi2SOF64EQ1Fqzl5upAWAaOMr29M5EmNpsEOTTdwlEYtZX2efFAgTezklPOfbQyqPwiVwPt2FiPbJFDPu0h5U0EZGspHPONkCWi5PtXmHauYdivlgpzTEK+k1gdzqmuIykYYF0AXyJpiCWqIV/GqafThDvUnFSxE9j0nvgU7JfYohOoW+mhAmks76DsrJGXxW3I1ac4Q9eCsiErghcoTLfaEJKcnoniY2HAS+kCSXNdaA27YbUBsLK82dBaewjYwy7dvH4DRzrwUm4jjcH0DrvA6RBUCbhfa0V/9hDdcyAMKgdnFleaDaHPYj+9waNfrzL0PLu235J3A1+4ctD0t28rnlnhTlAz9cCcjVVHqPmkDkxGxmQrc7oDkVDCj/LIt7pfZXf6gdap4jtn1EVc5p0jaKEG87d5r3HX+cHVJ88Z6CzxkCIESRQhUmxnXCS2USKRsnAGdEIrbeunlCN/mYZ+svsb9SXzWZq/lTUL50MwjRXPze7PpY+je1g7Gz73c6QteJYTvrSzl+4DRrkyER5WYBftHLiUZqwbAvyqFnBZutonceU6Jf/ScWeTv9CrYuMGfzp6vBrPM9etxR+TMP/80Q8=
+  - secure: jMwFKYsmZzS3PWzkeH+fZax0aos+Qqpkssd3lnGa4LPYWRHpvgkyrIWMcl9Q2//QX5fI9x3zLljQtsGksOw92rQziYLuaMgBtYoFqp44aUuj2SVQ6lO9yTPcNt5FECqfdQrHdDGhNdmkuLqNKQ3fOSTWJsqkH9Y6CupDAjTq8pusFvy1fUwQ094jfqg2JUMvlTNi06bPVM37DPiYcRBx5rNP7FADj/3d4UUFQDwv5f4SnWpaRCiMEzLh4xZgws9V5eBTCnMRlINWAFlF8Tg3dGO2uBpvNFYf+0NAtHOJVW7bNK6cIYaM8WRjTcHLfNFJxW7F2ssvm5Z8Bx/fOujBsZa3nmsZrSvWUK3nnlH2b0XQTmnk1LsUgbsZQwgUoR+dPPQ/6I7fiU5jko9dyn6BCAruKhtgTrfd1O51LxxQj2HZXCuulxvdBqIACmZOzB/tBTIy7xNeTJ05fStnMH3DYEcStv5AzCOIJFaAZiib8Y72KJ8pb/VXLTvpakv9yclhwi2frIPYTs/PVvmOfV2DNKL/D6+TSRvzoWvT9e6gH30QC0yLmsfNBo4mH/8K4mBviiGLgtWnAOM/jpU8B3af7rmDHG7CJKLWeJ3VDydA1LUlmCSnhv7aovrO/VlBHfbyxbm27kr72eVoqhAZZhQsbuN2ygrqkVWaumeGb05FpTQ=
+dd:
+  secure: EySea8P1vwvrqgSSQRA61pm+nG3vF/hnmv4/yqbi9iwsWfGvGduPUIoVWa9u+3cKMEmjt0yZmWQFttv/vjEX6E8Kcbc5FhXjcGTqsqsUt7R6qXJ8M7el8mZPCIUOc/F3tDiP1i1bsvcCXKYUkn2LyiIGAhO40BD1h4zoRwfonDzf1R7yVhE8Wl1OAePl4NR6wwqNWStACRxSUFL+IvGrm5rX93OAEco9FS8IByoqFoTgX6Atf50yjntpK1f1TO1DljtpOmfD0zd9H2J7j/wFvcY1OI2ExOkcbtIaZnS5LEhWAeHvfaeqXgaPub6f2cFv1vDan4RTQZq4pDB0t/bBH+rVAM5BFoblWt4BChDQjk6UWtu02ROQ21pkKFFKHbwBAjRzDQhV8Q2JfkeBRye5RMLOXuUq6+V2bu+jNRFFGGsYycVFxJqrWg8bB4TgAOI9ckTFtxhzahOboqxYeF7X0mpxlrLFVfytoFbxoJuZhyG5DMiiM228tPqonNsoJRlE2r0qIhPTsl0eNqZNXvoOWZlizvP5WtIfEAsem1psxHh+0v4Xc0VgHfSmOcx3w2Tdw4y5TWR/H6PyQbRd0SDQo3aNRLt7/xxnGr7eJWm1yo+mW9ktw7rWfYSkYy5i1XUb8H/qeQ/YdFjR/DaPW9pV646OZNEHieSpQzCBbL33Vug=
