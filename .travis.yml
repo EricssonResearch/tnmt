@@ -9,7 +9,7 @@ script:
 after_success:
 - docker --version
 - cd docker
-- docker login -p="$DOCKER_PASS" -u="$DOCKER_USER"
+- docker login -p=$DOCKER_PASS -u=$DOCKER_USER
 - docker build -t kappavita/projectcs18:latest .
 - docker push kappavita/projectcs18:latest
 env:
