@@ -5,6 +5,21 @@
 3. docker run -it --entrypoint=/bin/bash tmnt_image
 4. /root/startup.sh (or /root/startup.sh >> /root/ros.out & to start it in the background)
 
-Known issues ->
+## Pull from hub.docker.com
 
-1. docker build may fail -> to fix increase memory and swap file used by the docker daemon
+```
+docker pull kappavita/projectcs18:latest
+```
+
+## To test
+
+```
+rostopic list # you should see channels odom and scan
+```
+
+```
+# these channels should be active
+
+rostopic echo /odom 
+rostopic echo /scan
+```
