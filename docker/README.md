@@ -5,6 +5,12 @@
 3. docker run -it --entrypoint=/bin/bash tmnt_image
 4. /root/startup.sh (or /root/startup.sh >> /root/ros.out & to start it in the background)
 
+## Pull from docker.hub
+
+```
+docker pull kappavita/projectcs18:latest
+```
+
 ## To test
 
 ```
