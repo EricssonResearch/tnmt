@@ -19,28 +19,28 @@ RUN apt-get update && apt-get install -q -y \
 # setup keys
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys D2486D2DD83DB69272AFE98867170598AF249743
 
+RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+
+RUN apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
+
 # setup sources.list
 RUN . /etc/os-release \
     && echo "deb http://packages.osrfoundation.org/gazebo/$ID-stable `lsb_release -sc` main" > /etc/apt/sources.list.d/gazebo-latest.list
 
 # install gazebo packages
 RUN apt-get update && apt-get install -q -y \
-    gazebo7=7.14.0-1* \
+    build-essential libgtk-3-dev ros-kinetic-desktop gazebo7=7.14.0-1* \
     && rm -rf /var/lib/apt/lists/*
 
 # setup environment
 EXPOSE 11345
 
-RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
-
-RUN apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
-
-RUN apt-get update
+#RUN apt-get update
 
 # ROS Kinetic Dependencies & Install
 
-RUN apt-get install build-essential libgtk-3-dev ros-kinetic-desktop -yq \ 
-    && rm -rf /var/lib/apt/lists/*
+#RUN apt-get install build-essential libgtk-3-dev ros-kinetic-desktop -yq \ 
+    #&& rm -rf /var/lib/apt/lists/*
 
 RUN rm -f /etc/ros/rosdep/sources.list.d/20-default.list
 
