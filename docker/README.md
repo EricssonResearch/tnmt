@@ -17,7 +17,3 @@ rostopic list # you should see channels odom and scan
 rostopic echo /odom 
 rostopic echo /scan
 ```
-
-Known issues ->
-
-1. docker build may fail -> to fix increase memory and swap file used by the docker daemon
