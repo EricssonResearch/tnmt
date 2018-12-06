@@ -13,7 +13,6 @@ RUN apt-get update && apt-get install -q -y \
     sudo \
     wget \
     git \
-    openssh-server \
     && rm -rf /var/lib/apt/lists/*
 
 # setup keys
@@ -127,9 +126,7 @@ COPY turtlebot2i_deep_qlearning/turtlebot2i_deep_qlearning/ /root/turtlebot2i/sr
 
 RUN /bin/bash -c ". /opt/ros/kinetic/setup.bash; catkin_make"
 
-#RUN pip install -r /root/turtlebot2i/src/turtlebot2i_deep_qlearning/dqn/requirements.txt
-
-RUN /etc/init.d/ssh start
+RUN pip install -r /root/turtlebot2i/src/turtlebot2i_deep_qlearning/dqn/requirements.txt
 
 COPY startup.sh /root/
 
