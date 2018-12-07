@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -q -y \
     sudo \
     wget \
     git \
+    openssh-server \
     && rm -rf /var/lib/apt/lists/*
 
 # setup keys
@@ -128,8 +129,17 @@ RUN /bin/bash -c ". /opt/ros/kinetic/setup.bash; catkin_make"
 
 RUN pip install -r /root/turtlebot2i/src/turtlebot2i_deep_qlearning/dqn/requirements.txt
 
+RUN echo 'root:root' |chpasswd
+
+RUN sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
+RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
+
+RUN mkdir /root/.ssh
+
 COPY startup.sh /root/
+
+EXPOSE 22
 
 WORKDIR /root
 
-ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT ["/root/startup.sh"]

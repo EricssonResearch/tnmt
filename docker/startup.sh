@@ -1,4 +1,7 @@
 #!/bin/bash
+
+service ssh start
+
 source /opt/ros/kinetic/setup.bash
 alias goros='source devel/setup.sh'
 export ROS_HOSTNAME=localhost
