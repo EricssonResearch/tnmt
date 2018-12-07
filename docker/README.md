@@ -8,6 +8,15 @@
 3. docker run -d -p:2022:22 tmnt_image (startup script will now run automatically)
 4. You can access the image via ssh -p 2022 root@localhost (password is root)
 
+## Persistent storage
+
+saved_model is the directory that is being used to store the models produced by tf. In order to keep these models even after the container is done you should use a volume mount such as:
+
+```
+-v /home/my_user/mymodels:/root/turtlebot2i/src/turtlebot2i_deep_qlearning/dqn/saved_model
+```
+
+
 ## Pull from hub.docker.com
 
 ```
