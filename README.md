@@ -1,5 +1,3 @@
-# tnmt
-
 # COLLABORATIVE FENCELESS ROBOTICS 
 
 Implementation on the physical robot
